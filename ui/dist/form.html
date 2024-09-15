@@ -4,24 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to N.A.C.W.O</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="form.html">
-    <link rel="stylesheet" href="script.js">
-
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <h1>Welcome to N.A.C.W.O</h1>
-</header>
-<nav>
+  </header>
+  <nav>
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="form.html">About Us</a></li>
+      
     </ul>
-</nav>
+  </nav>
   <div class="container">
-    <h2>N.A.C.W.O  Information Form</h2>
+    <h2>N.A.C.W.O Information Form</h2>
     <form id="businessForm">
       <label for="membershipNumber">Membership Number</label>
       <input type="text" id="membershipNumber" name="membershipNumber" required>
@@ -32,17 +29,32 @@
       <label for="registeredBusinessName">Registered Business Name</label>
       <input type="text" id="registeredBusinessName" name="registeredBusinessName" required>
 
-      <label for="regitrationNo">Registration Number</label>
-      <input type="text" id="regitrationNo" name="regitrationNo">
+      <label for="cipcRegistration">CIPC Registration</label>
+      <select id="cipcRegistration" name="cipcRegistration" onchange="toggleCIPC()">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+      <input type="text" id="regitrationNo" name="regitrationNo" placeholder="Enter Registration Number" style="display:none;">
 
       <label for="businessBankAccount">Business Bank Account</label>
-      <input type="text" id="businessBankAccount" placeholder="Account No (Optional)" name="businessBankAccount">
+      <select id="businessBankAccount" name="businessBankAccount" onchange="toggleBankAccount()">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+      <input type="text" id="bankAccountDetails" name="bankAccountDetails" placeholder="Enter Bank Account Details" style="display:none;">
 
       <label for="sarsPin">SARS Pin</label>
-      <input type="text" id="sarsPin" name="sarsPin">
+      <select id="sarsPin" name="sarsPin" onchange="toggleSARS()">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select>
+      <input type="text" id="sarsPinDetails" name="sarsPinDetails" placeholder="Enter SARS Pin" style="display:none;">
 
       <label for="ownership">Ownership</label>
-      <input type="text" id="ownership" name="ownership" required>
+      <select id="ownership" name="ownership" required>
+        <option value="Private">Private</option>
+        <option value="Franchise">Franchise</option>
+      </select>
 
       <label for="nameAndSurname">Owner's Name and Surname</label>
       <input type="text" id="nameAndSurname" name="nameAndSurname" required>
@@ -72,6 +84,9 @@
       <label for="province">Province</label>
       <input type="text" id="province" name="province">
 
+      <label for="postalCode">Postal Code</label>
+      <input type="text" id="postalCode" name="postalCode" required>
+
       <label for="latitude">GPS Latitude</label>
       <input type="text" id="latitude" name="latitude" required>
 
@@ -81,36 +96,93 @@
       <button type="submit">Submit</button>
     </form>
   </div>
-  <script>
-    document.getElementById('businessForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Prevent the form from submitting the default way
   
-      // Capture form data
+  <script>
+    /* Toggle fields based on CIPC selection*/
+    function toggleCIPC() {
+      const cipc = document.getElementById('cipcRegistration').value;
+      document.getElementById('regitrationNo').style.display = cipc === 'yes' ? 'block' : 'none';
+    }
+
+    /* Toggle fields based on Business Bank Account selection*/
+    function toggleBankAccount() {
+      const bankAccount = document.getElementById('businessBankAccount').value;
+      document.getElementById('bankAccountDetails').style.display = bankAccount === 'yes' ? 'block' : 'none';
+    }
+
+    /* Toggle fields based on SARS Pin selection*/
+    function toggleSARS() {
+      const sars = document.getElementById('sarsPin').value;
+      document.getElementById('sarsPinDetails').style.display = sars === 'yes' ? 'block' : 'none';
+    }
+
+    /* Form submission logic*/
+    document.getElementById('businessForm').addEventListener('submit', function(e) {
+      e.preventDefault(); 
+
+      /* Capture form data*/
       const formData = {
-        membershipNumber: document.getElementById('membershipNumber').value,
-        carWashName: document.getElementById('carWashName').value,
-        registeredBusinessName: document.getElementById('registeredBusinessName').value,
-        regitrationNo: document.getElementById('regitrationNo').value,
+        membershipNumber: document.getElementById('membershipNumber').value.trim(),
+        carWashName: document.getElementById('carWashName').value.trim(),
+        registeredBusinessName: document.getElementById('registeredBusinessName').value.trim(),
+        cipcRegistration: document.getElementById('cipcRegistration').value,
+        regitrationNo: document.getElementById('regitrationNo').value.trim(),
         businessBankAccount: document.getElementById('businessBankAccount').value,
+        bankAccountDetails: document.getElementById('bankAccountDetails').value.trim(),
         sarsPin: document.getElementById('sarsPin').value,
-        ownership: document.getElementById('ownership').value,
-        nameAndSurname: document.getElementById('nameAndSurname').value,
-        ownersID: document.getElementById('ownersID').value,
-        contactNumber: document.getElementById('contactNumber').value,
-        emailAddress: document.getElementById('emailAddress').value,
-        joiningDate: document.getElementById('joiningDate').value,
+        sarsPinDetails: document.getElementById('sarsPinDetails').value.trim(),
+        ownership: document.getElementById('ownership').value.trim(),
+        nameAndSurname: document.getElementById('nameAndSurname').value.trim(),
+        ownersID: document.getElementById('ownersID').value.trim(),
+        contactNumber: document.getElementById('contactNumber').value.trim(),
+        emailAddress: document.getElementById('emailAddress').value.trim(),
+        joiningDate: document.getElementById('joiningDate').value.trim(),
         physicalAddress: {
-          line1: document.getElementById('line1').value,
-          line2: document.getElementById('line2').value,
-          city: document.getElementById('city').value,
-          province: document.getElementById('province').value,
+          line1: document.getElementById('line1').value.trim(),
+          line2: document.getElementById('line2').value.trim(),
+          city: document.getElementById('city').value.trim(),
+          province: document.getElementById('province').value.trim(),
+          postalCode: document.getElementById('postalCode').value.trim(),
           gpsCoordinate: {
-            latitude: document.getElementById('latitude').value,
-            longitude: document.getElementById('longitude').value
+            latitude: document.getElementById('latitude').value.trim(),
+            longitude: document.getElementById('longitude').value.trim()
           }
         }
       };
 
+      /* Logic validation*/
+      let errors = [];
+
+      /* Check if required fields are filled*/
+      if (!formData.membershipNumber) errors.push("Membership Number is required.");
+      if (!formData.carWashName) errors.push("Car Wash Name is required.");
+      if (!formData.registeredBusinessName) errors.push("Registered Business Name is required.");
+      if (formData.cipcRegistration === 'yes' && !formData.regitrationNo) errors.push("Registration Number is required.");
+      if (formData.businessBankAccount === 'yes' && !formData.bankAccountDetails) errors.push("Bank Account Details are required.");
+      if (formData.sarsPin === 'yes' && !formData.sarsPinDetails) errors.push("SARS Pin is required.");
+      if (!formData.ownership) errors.push("Ownership is required.");
+      if (!formData.nameAndSurname) errors.push("Owner's Name and Surname is required.");
+      if (!formData.ownersID) errors.push("Owner's ID is required.");
+      if (!formData.contactNumber.match(/^\d{10}$/)) errors.push("Contact Number must be a valid 10-digit number.");
+      if (!formData.emailAddress.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errors.push("Invalid email address.");
+      if (isNaN(formData.physicalAddress.gpsCoordinate.latitude)) errors.push("Latitude must be a valid number.");
+      if (isNaN(formData.physicalAddress.gpsCoordinate.longitude)) errors.push("Longitude must be a valid number.");
+      if (!formData.physicalAddress.postalCode.match(/^\d{4}$/)) errors.push("Postal Code must be a valid 4-digit number.");
+
+      /* Display errors or submit the form*/
+      if (errors.length > 0) {
+        alert("Please fix the following errors:\n" + errors.join("\n"));
+      } else {
+        alert("Form submitted successfully!");
+        console.log(formData);
+
+        /* Send form data to the server using Fetch API
+          Define headers*/
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+     
+      
+      
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -118,7 +190,7 @@
         redirect: "follow"
       };
   
-      // Send form data to the server using Fetch API
+      
       fetch("http://localhost:5000/nacwo/api/v1/carwash", requestOptions, {
         method: 'POST',
         headers: {
@@ -134,7 +206,8 @@
         alert('Error submitting data');
         console.error('Error:', error);
       });
-    });    
+      }
+    });
   </script>
 </body>
 </html>
