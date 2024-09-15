@@ -46,8 +46,8 @@ body {
     color: #333;
     text-align: center; /* Center all content */
     background-image: url('./img/catoon.jpeg'); /* Add your background image here */
-    background-image: width 3rem, height 3.75rem;
-    background-size: cover; /* Cover the entire page */
+    background-image: 2.25rem ;
+    background-size: auto ; /* Cover the entire page */
     background-attachment: fixed; /* Make the background fixed */
 }
 
