@@ -1,13 +1,13 @@
-const express =  require('express')  
-const app = express()
+const express =  require('express');  
+const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const mysql = require('mysql2');
-const port = 5000
+const port = 5000;
 
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
-app.use(cors())
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(cors());
 
 const db = mysql.createConnection({
     host: 'localhost', /* MySQL host*/
@@ -28,15 +28,15 @@ db.connect((err) => {
 
 app.get('/thabo', (req, resp) => {
     const name = req.query;
-    console.log('response: ', name)
-    resp.send(`hello T-Bose ${name.name}`)
+    console.log('response: ', name);
+    resp.send(`hello T-Bose ${name.name}`);
 })
 
 app.post('/nacwo/api/v1/carwash', async (req, res) =>{
     console.log(req.body);
     savecarwash(req.body);
 
-    res.status(201).send(`Successfully created`)
+    res.status(201).send(`Successfully created`);
 })
 
 
@@ -74,10 +74,6 @@ function savecarwash(businessData) {
             console.log('Data inserted successfully:', res);
         }
     });
-
-    //TODO validations
-    //TODO if validation has failed, return error to frontend
-    //TODO if validation pass: use mysql library to store info into db
 }
 
 
